@@ -3,10 +3,10 @@
         <v-flex xs12 sm9 md9 lg6>
             <v-card>
                 <v-card-title>
-                    Login
+                    LOGIN
                 </v-card-title>
                 <v-card-text>
-                    <v-form lazy-validation>
+                    <v-form ref="loginForm" v-model="valid" lazy-validation>
                         <v-text-field
                             v-model="email"
                             :rules="emailRules"
@@ -24,7 +24,7 @@
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn flat>Login</v-btn>
+                    <v-btn flat @click="submit">Sign in</v-btn>
                     <v-btn flat to="/register">Register</v-btn>
                 </v-card-actions>
             </v-card>
@@ -36,6 +36,7 @@
 export default {
     data: function () {
         return {
+            valid: true,
             email: '',
             password: '',
             emailRules: [
@@ -43,9 +44,17 @@ export default {
                 v => /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(v) || 'E-mail must be valid'
             ],
             passwordRules: [
-                v => !!v || 'Password is required',
-                // v => /^\S{6,20}$/.test(v) || 'Password length must be from 6 to 20 characters',
+                v => !!v || 'Password is required'
             ]
+        }
+    },
+    methods: {
+        submit: function () {
+            if (this.$refs.loginForm.validate()) {
+                console.log('valid form')
+            } else {
+                console.log('form not valid')
+            }
         }
     }
 }
