@@ -1,7 +1,7 @@
 {
   "name": "wallets",
   "version": "1.0.0",
-  "description": "My sensational Nuxt.js project",
+  "description": "Nuxt.js project. Cash management service.",
   "author": "bisend",
   "private": true,
   "scripts": {

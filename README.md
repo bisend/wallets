@@ -1,6 +1,6 @@
 # wallets
 
-> My sensational Nuxt.js project
+> Nuxt.js project. Cash management service.
 
 ## Build Setup
 
