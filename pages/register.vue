@@ -47,7 +47,7 @@
 
 <script>
 export default {
-    data: function () {
+    data() {
         return {
             valid: true,
             email: '',
@@ -68,8 +68,20 @@ export default {
         }
     },
     methods: {
-        submit: function () {
+        submit() {
             if (this.$refs.registerForm.validate()) {
+                let url = "https://wallets-d4ab2.firebaseio.com/users.json"
+                this.$store.dispatch('setAjaxLoading', true)
+                this.$axios.$post(url, {
+                    email: this.email
+                })
+                .then(response => {
+                    this.$store.dispatch('setAjaxLoading', false)
+                    console.log(response)
+                })
+                .catch(erroe => {
+                    this.$store.dispatch('setAjaxLoading', false)
+                })
                 console.log('valid form')
             } else {
                 console.log('not valid form')

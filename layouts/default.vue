@@ -1,5 +1,6 @@
 <template>
 	<v-app>
+		<AjaxLoader :loading="isAjaxLoading" />
 		<v-toolbar fixed app :clipped-left="clipped">
 			<nuxt-link to="/">
 				{{ title }}
@@ -41,6 +42,11 @@
 				rightDrawer: false,
 				title: 'Wallets',
 				year: new Date().getFullYear()
+			}
+		},
+		computed: {
+			isAjaxLoading() {
+				return this.$store.getters.isAjaxLoading
 			}
 		}
 	}

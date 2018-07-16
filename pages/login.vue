@@ -34,7 +34,7 @@
 
 <script>
 export default {
-    data: function () {
+    data() {
         return {
             valid: true,
             email: '',
@@ -49,7 +49,7 @@ export default {
         }
     },
     methods: {
-        submit: function () {
+        submit() {
             if (this.$refs.loginForm.validate()) {
                 console.log('valid form')
             } else {
