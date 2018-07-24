@@ -1,0 +1,15 @@
+.alert-container {
+    width: 300px;
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+}
+
+.alert-enter-active, .alert-leave-active {
+    transition: all .5s;
+}
+
+.alert-enter, .alert-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    transform: translateX(200px);
+    opacity: 0;
+}

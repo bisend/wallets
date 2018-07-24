@@ -14,7 +14,9 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.0.0",
-    "epic-spinners": "^1.0.3",
+    "alertifyjs": "^1.11.1",
+    "firebase": "^5.2.0",
+    "js-cookie": "^2.2.0",
     "nuxt": "^1.0.0",
     "vuetify": "^1.0.19"
   },

@@ -1,10 +1,14 @@
 import Vuex from 'vuex'
-import commonModule from './common.js'
+import common from './common.js'
+import auth from './auth.js'
+import alert from './alert.js'
 
 const createStore = () => {
     return new Vuex.Store({
         modules: [
-            commonModule
+            common,
+            auth,
+            alert
         ]
     })
 }

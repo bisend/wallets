@@ -30,7 +30,8 @@ module.exports = {
   ** Global CSS
   */
   css: [
-    'vuetify/src/stylus/main.styl'
+    'vuetify/src/stylus/main.styl',
+    '@/assets/css/main.css',
   ],
 
   /*
@@ -38,7 +39,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vuetify',
-    '@/plugins/global-components.js'
+    '@/plugins/global-components.js',
+    '@/plugins/firebase.js',
   ],
 
   /*
@@ -53,6 +55,14 @@ module.exports = {
   */
   axios: {
     // See https://github.com/nuxt-community/axios-module#options
+  },
+
+  // router config
+  router: {
+    middleware: [
+      'init-auth',
+      'check-auth'
+    ]
   },
 
   /*
@@ -81,6 +91,6 @@ module.exports = {
           })
         ]
       }
-    }
+    },
   }
 }

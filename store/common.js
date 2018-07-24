@@ -1,4 +1,4 @@
-const commonModule = {
+const common = {
     state: {
         isAjaxLoading: false
     },
@@ -19,4 +19,4 @@ const commonModule = {
     }
 }
 
-export default commonModule
+export default common
