@@ -1,12 +1,67 @@
 <template>
 	<v-app>
 		<AjaxLoader :loading="isAjaxLoading" />
+		<v-navigation-drawer :disable-resize-watcher="true" v-model="drawer" app>
+			<v-toolbar flat>
+				<v-list>
+					<v-list-tile>
+						<v-list-tile-title class="title">
+							<nuxt-link to="/">
+								{{ title }}
+							</nuxt-link>
+						</v-list-tile-title>
+					</v-list-tile>
+				</v-list>
+			</v-toolbar>
+			<v-divider></v-divider>
+			<v-list dense class="pt-0">
+				<v-list-tile
+					v-if=" ! isAuthenticated"
+					v-for="item in items"
+					:key="item.title"
+					:to="item.link"
+				>
+					<v-list-tile-action>
+						<v-icon>{{ item.icon }}</v-icon>
+					</v-list-tile-action>
+					<v-list-tile-content>
+						<v-list-tile-title>{{ item.title }}</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+			<v-list dense class="pt-0">
+				<v-list-tile
+					v-if="isAuthenticated"
+					v-for="item in loggedItems"
+					:key="item.title"
+					:to="item.link"
+				>
+					<v-list-tile-action>
+						<v-icon>{{ item.icon }}</v-icon>
+					</v-list-tile-action>
+					<v-list-tile-content>
+						<v-list-tile-title>{{ item.title }}</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+				<v-list-tile
+					@click="logout"
+				>
+					<v-list-tile-action>
+						<v-icon>exit_to_app</v-icon>
+					</v-list-tile-action>
+					<v-list-tile-content>
+						<v-list-tile-title>Logout</v-list-tile-title>
+					</v-list-tile-content>
+				</v-list-tile>
+			</v-list>
+		</v-navigation-drawer>
 		<v-toolbar fixed app :clipped-left="clipped">
-			<nuxt-link to="/">
+			<v-toolbar-side-icon :class="'hide-on-desktop'" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+			<nuxt-link :class="'hide-on-mobile'" to="/">
 				{{ title }}
 			</nuxt-link>
 			<v-spacer></v-spacer>
-			<v-toolbar-items v-if=" ! isAuthenticated">
+			<v-toolbar-items :class="'hide-on-mobile'" v-if=" ! isAuthenticated">
 				<v-btn flat nuxt to="/login">
 					Login
 				</v-btn>
@@ -14,7 +69,7 @@
 					Register
 				</v-btn>
 			</v-toolbar-items>
-			<v-toolbar-items v-else>
+			<v-toolbar-items :class="'hide-on-mobile'" v-else>
 				<v-btn flat nuxt to="/wallets/create">
 					New Wallet
 				</v-btn>
@@ -49,17 +104,17 @@
 		data() {
 			return {
 				clipped: false,
-				drawer: true,
+				drawer: false,
 				fixed: false,
-				items: [
-					{ icon: 'apps', title: 'Welcome', to: '/' },
-					{ icon: 'bubble_chart', title: 'Inspire', to: '/inspire' }
-				],
-				miniVariant: false,
-				right: true,
-				rightDrawer: false,
 				title: 'Wallets',
-				year: new Date().getFullYear()
+				year: new Date().getFullYear(),
+				items: [
+					{ title: 'Login', icon: 'person', link: '/login' },
+          			{ title: 'Register', icon: 'person_add', link: '/register' }
+				],
+				loggedItems: [
+					{ title: 'New Wallet', icon: 'library_add', link: '/wallets/create'}
+				]
 			}
 		},
 		methods: {

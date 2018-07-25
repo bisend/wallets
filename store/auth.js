@@ -65,6 +65,14 @@ const auth = {
                         Cookie.set('uid', user.uid, { expires : inOneHour })
                         Cookie.set('email', user.email, { expires : inOneHour })
                         vuexContext.commit('setUser', user)
+                        // console.log(this.$axios.$get('http://icanhazip.com'))
+                        this.$axios.$put('https://wallets-d4ab2.firebaseio.com/users/'+user.uid+'.json', {
+                            wallets: ''
+                        })
+                        .then((response) => {
+                            console.log(response)
+                        })
+
                     })
                     .catch((error) => {
                         console.log(error)
@@ -127,6 +135,9 @@ const auth = {
     getters: {
         isAuthenticated(state) {
             return state.token != null
+        },
+        getUser(state) {
+            return state.user
         }
     }
 }

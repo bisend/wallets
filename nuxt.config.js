@@ -31,6 +31,7 @@ module.exports = {
   */
   css: [
     'vuetify/src/stylus/main.styl',
+    '@/assets/css/responsive.css',
     '@/assets/css/main.css',
   ],
 
@@ -41,6 +42,11 @@ module.exports = {
     '@/plugins/vuetify',
     '@/plugins/global-components.js',
     '@/plugins/firebase.js',
+    '@/plugins/upper-case-filter.js',
+    {
+      src: '@/plugins/date-helper.js',
+      ssr: false
+    }
   ],
 
   /*

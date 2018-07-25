@@ -1,0 +1,19 @@
+@media (min-width: 1024px) {
+    .show-on-desktop {
+        display: block;
+    }
+
+    .hide-on-desktop {
+        display: none;
+    }
+}
+
+@media (max-width: 1023px) {
+    .show-on-mobile {
+        display: block;
+    }
+
+    .hide-on-mobile {
+        display: none;
+    }
+}

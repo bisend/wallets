@@ -12,6 +12,7 @@
 							:rules="emailRules"
 							type="email"
 							label="E-mail"
+							@keydown.enter.prevent="submit"
 							required
 						></v-text-field>
 						<v-text-field
@@ -19,6 +20,7 @@
 							:rules="passwordRules"
 							type="password"
 							label="Password"
+							@keydown.enter.prevent="submit"
 							required
 						></v-text-field>
 					</v-form>
