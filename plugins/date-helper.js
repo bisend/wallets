@@ -7,6 +7,7 @@ const dateHelper = () => {
     let hour = currentDate.getHours()
     let minute = currentDate.getMinutes()
     let second = currentDate.getSeconds()
+    second = second < 10 ? '0' + second : second
     let dateString = `${date}-${month}-${year} ${hour}:${minute}:${second}`
     return dateString
 }

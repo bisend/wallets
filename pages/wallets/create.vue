@@ -45,9 +45,10 @@
 
 <script>
 import dateHelper from '@/plugins/date-helper.js'
+import uid from 'uid2'
 export default {
     fetch(context) {
-        return context.store.dispatch('getAvailiableCurrencies')
+        context.store.dispatch('getAvailiableCurrencies')
     },
     data() {
         return {
@@ -87,7 +88,9 @@ export default {
     methods: {
         submit() {
             if (this.$refs.newWalletForm.validate()) {
-                this.$axios.$post('https://wallets-d4ab2.firebaseio.com/wallets/'+this.getUser.uid+'.json', {
+                this.$axios.$post('https://wallets-d4ab2.firebaseio.com/wallets.json', {
+                    userId: this.getUser.uid,
+                    number: uid(16),
                     name: this.name.trim(),
                     currency: this.currency,
                     balance: 0,
@@ -95,6 +98,12 @@ export default {
                     updated_at: dateHelper()
                 })
                 .then((response) => {
+                    this.$axios.$patch(`https://wallets-d4ab2.firebaseio.com/users/${this.getUser.uid}/wallets.json`,{
+                        [response.name]: response.name
+                    })
+                    .then((response) => {
+                        this.$store.dispatch('getUserData', this.getUser)
+                    })
                     if (this.isNewCurrency) {
                         this.$axios.$patch('https://wallets-d4ab2.firebaseio.com/currencies.json', {
                             [this.currency]: this.currency
@@ -118,15 +127,7 @@ export default {
         }
     },
     mounted() {
-        // console.log(dateHelper())
-        // console.log(currentDate)
-        // console.log(date)
-        // console.log(month)
-        // console.log(year)
-        // console.log(hour)
-        // console.log(minute)
-        // console.log(second)
-        // console.log(dateString)
+       
     }
 }
 </script>

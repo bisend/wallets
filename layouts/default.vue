@@ -70,6 +70,9 @@
 				</v-btn>
 			</v-toolbar-items>
 			<v-toolbar-items :class="'hide-on-mobile'" v-else>
+				<v-btn flat nuxt to="/wallets/list">
+					My Wallets
+				</v-btn>
 				<v-btn flat nuxt to="/wallets/create">
 					New Wallet
 				</v-btn>

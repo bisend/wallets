@@ -65,7 +65,6 @@ const auth = {
                         Cookie.set('uid', user.uid, { expires : inOneHour })
                         Cookie.set('email', user.email, { expires : inOneHour })
                         vuexContext.commit('setUser', user)
-                        // console.log(this.$axios.$get('http://icanhazip.com'))
                         this.$axios.$put('https://wallets-d4ab2.firebaseio.com/users/'+user.uid+'.json', {
                             wallets: ''
                         })
@@ -96,6 +95,20 @@ const auth = {
                 console.log(error)
             })
         },
+        getUserData(vuexContext, user) {
+            return this.$axios.$get(`https://wallets-d4ab2.firebaseio.com/users/${user.uid}.json`)
+            .then((response) => {
+                let wallets = []
+                for (let wallet in response['wallets']) {
+                    wallets.push(wallet)
+                }
+                let u = {
+                    ...user,
+                    wallets: wallets
+                }
+                vuexContext.commit('setUser', u)
+            })
+        },
         initAuth(vuexContext, req) {
             let cookie = null
             let token = null
@@ -115,6 +128,8 @@ const auth = {
                         user = {}
                         user.email = emailCookie.split('=')[1]
                         user.uid = uidCookie.split('=')[1]
+                        vuexContext.commit('setToken', token)
+                        return vuexContext.dispatch('getUserData', user)
                     }
                 }
             } else {
@@ -125,11 +140,12 @@ const auth = {
                     user = {}
                     user.email = Cookie.get('email')
                     user.uid = Cookie.get('uid')
+                    vuexContext.commit('setToken', token)
+                    return vuexContext.dispatch('getUserData', user)
                 }
             }
 
-            vuexContext.commit('setToken', token)
-            vuexContext.commit('setUser', user)
+            // vuexContext.commit('setUser', user)
         }
     },
     getters: {
