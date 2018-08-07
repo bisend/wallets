@@ -19,7 +19,8 @@ const walletsList = {
                 uid = Cookie.get('uid')
             }
             return this.$axios.$get('https://wallets-d4ab2.firebaseio.com/wallets.json?orderBy="userId"&startAt="'+uid+'"&print=pretty')
-                .then((response) => {
+                .then(response => {
+                    console.log(response)
                     for (let key in response) {
                         wallets.push({ walletId: key, ...response[key] })
                     }

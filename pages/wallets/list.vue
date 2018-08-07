@@ -1,22 +1,18 @@
-<template>
-    <div>
-        <h1>My wallets</h1>
-        <v-layout>
-            <v-card></v-card>
-        </v-layout>
-        <div>
-            <ul>
-                <li v-for="wallet in getWallets" :key="wallet.walletId">
+<template> 
+    <v-layout row wrap>
+        <v-flex v-for="wallet in getWallets" :key="wallet.walletId" xs4>
+            <v-card>
+                <v-card-text>
                     {{ wallet.name }}
-                </li>
-            </ul>
-        </div>
-    </div>
+                </v-card-text>
+            </v-card>
+        </v-flex>
+    </v-layout>
 </template>
 
 <script>
 export default {
-    fetch(context) {
+    asyncData(context) {
         if ( ! context.store.getters.getWallets.length) {
             return context.store.dispatch('getAvailiableWallets', process.server ? context.req : null)
         }
