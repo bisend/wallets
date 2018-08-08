@@ -60,7 +60,8 @@ const auth = {
                         vuexContext.commit('setToken', idToken)
                         let user = {
                             email: firebase.auth().currentUser.email,
-                            uid: firebase.auth().currentUser.uid
+                            uid: firebase.auth().currentUser.uid,
+                            wallets: []
                         }
                         Cookie.set('uid', user.uid, { expires : inOneHour })
                         Cookie.set('email', user.email, { expires : inOneHour })
@@ -97,17 +98,20 @@ const auth = {
         },
         getUserData(vuexContext, user) {
             return this.$axios.$get(`https://wallets-d4ab2.firebaseio.com/users/${user.uid}.json`)
-            .then((response) => {
-                let wallets = []
-                for (let wallet in response['wallets']) {
-                    wallets.push(wallet)
-                }
-                let u = {
-                    ...user,
-                    wallets: wallets
-                }
-                vuexContext.commit('setUser', u)
-            })
+                .then((response) => {
+                    console.log(response)
+                    let wallets = []
+                    if (response && response['wallets'] && response['wallets'].length) {
+                        for (let wallet in response['wallets']) {
+                            wallets.push(wallet)
+                        }
+                    }
+                    let u = {
+                        ...user,
+                        wallets: wallets
+                    }
+                    vuexContext.commit('setUser', u)
+                })
         },
         initAuth(vuexContext, req) {
             let cookie = null
@@ -115,7 +119,7 @@ const auth = {
             let user = null
             let emailCookie = null
             let uidCookie = null
-
+            vuexContext.commit('clearToken')
             if (req) {
                 if (req.headers.cookie) {
                     cookie = req.headers.cookie.split(';').find(c => c.trim().startsWith('token='))
@@ -128,6 +132,7 @@ const auth = {
                         user = {}
                         user.email = emailCookie.split('=')[1]
                         user.uid = uidCookie.split('=')[1]
+                        user.wallets = []
                         vuexContext.commit('setToken', token)
                         return vuexContext.dispatch('getUserData', user)
                     }
@@ -140,12 +145,11 @@ const auth = {
                     user = {}
                     user.email = Cookie.get('email')
                     user.uid = Cookie.get('uid')
+                    user.wallets = []
                     vuexContext.commit('setToken', token)
                     return vuexContext.dispatch('getUserData', user)
                 }
             }
-
-            // vuexContext.commit('setUser', user)
         }
     },
     getters: {

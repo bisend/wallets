@@ -13,3 +13,7 @@
     transform: translateX(200px);
     opacity: 0;
 }
+
+.j-center {
+    justify-content: center;
+}

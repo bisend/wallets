@@ -22,7 +22,10 @@ const walletsList = {
                 .then(response => {
                     console.log(response)
                     for (let key in response) {
-                        wallets.push({ walletId: key, ...response[key] })
+                        wallets.push({ 
+                            walletId: key, 
+                            ...response[key] 
+                        })
                     }
                     vuexContext.commit('setWallets', wallets)
                 }).catch(error => {

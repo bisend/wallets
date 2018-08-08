@@ -26,7 +26,7 @@
 					</v-form>
 				</v-card-text>
 				<v-card-actions>
-					<v-btn flat @click="submit">Sign in</v-btn>
+					<v-btn flat @click="submit" color="info">Sign in</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-flex>

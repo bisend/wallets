@@ -30,14 +30,16 @@
                     :counter="3"
                     :rules="customCurrencyRules"
                     required
+                    @keydown.enter.prevent="submit"
                 ></v-text-field>
                 <v-text-field
                     label="Name"
                     v-model="name"
                     :rules="nameRules"
                     required
+                    @keydown.enter.prevent="submit"
                 ></v-text-field>
-                <v-btn @click="submit">Create</v-btn>
+                <v-btn @click="submit" color="info">Create</v-btn>
             </v-form>
         </v-flex>
     </v-layout>
@@ -45,10 +47,11 @@
 
 <script>
 import dateHelper from '@/plugins/date-helper.js'
+import priceFilter from '@/plugins/price-filter.js'
 import uid from 'uid2'
 export default {
     fetch(context) {
-        context.store.dispatch('getAvailiableCurrencies')
+        return context.store.dispatch('getAvailiableCurrencies')
     },
     data() {
         return {
@@ -88,12 +91,13 @@ export default {
     methods: {
         submit() {
             if (this.$refs.newWalletForm.validate()) {
+                this.$store.dispatch('setAjaxLoading', true)
                 this.$axios.$post('https://wallets-d4ab2.firebaseio.com/wallets.json', {
                     userId: this.getUser.uid,
                     number: uid(16),
                     name: this.name.trim(),
                     currency: this.currency,
-                    balance: 0,
+                    balance: priceFilter(0),
                     created_at: dateHelper(),
                     updated_at: dateHelper()
                 })
@@ -112,6 +116,8 @@ export default {
                             this.$store.dispatch('getAvailiableCurrencies')
                         })
                     }
+                    this.$store.dispatch('setAjaxLoading', false)
+                    this.$store.dispatch('showAlert', { message: 'New wallet created successfully!', type: 'success', time: 3 })
                     this.clearForm()
                 })
             }

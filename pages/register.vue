@@ -12,6 +12,7 @@
 							type="email"
 							label="E-mail"
 							:rules="emailRules"
+							@keydown.enter.prevent="submit"
 							required
 						></v-text-field>
 						<v-text-field
@@ -20,6 +21,7 @@
 							label="Password"
 							:rules="passwordRules"
 							:counter="20"
+							@keydown.enter.prevent="submit"
 							required
 						></v-text-field>
 						<v-text-field
@@ -28,12 +30,13 @@
 							label="Confirm password"
 							:rules="passwordConfirmationRules"
 							:counter="20"
+							@keydown.enter.prevent="submit"
 							required
 						></v-text-field>
 					</v-form>
 				</v-card-text>
 				<v-card-actions>
-					<v-btn flat @click="submit">
+					<v-btn flat @click="submit" color="info">
 						SIGN UP
 					</v-btn>
 				</v-card-actions>
@@ -78,7 +81,8 @@ export default {
 					email: this.email,
 					password: this.password
 				})
-				.then(() => {
+				.then((response) => {
+					console.log(response)
 					this.$store.dispatch('setAjaxLoading', false)
 					if (this.isAuthenticated) {
 						this.$router.push('/')

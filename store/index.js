@@ -4,6 +4,7 @@ import auth from './auth.js'
 import alert from './alert.js'
 import currencies from './currencies.js'
 import walletsList from './wallets-list.js'
+import wallet from './wallet.js'
 
 const createStore = () => {
     return new Vuex.Store({
@@ -21,7 +22,8 @@ const createStore = () => {
             auth,
             alert,
             currencies,
-            walletsList
+            walletsList,
+            wallet
         ]
     })
 }

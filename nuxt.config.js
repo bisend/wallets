@@ -46,7 +46,11 @@ module.exports = {
     {
       src: '@/plugins/date-helper.js',
       ssr: false
-    }
+    },
+    {
+      src: '@/plugins/price-filter.js',
+      ssr: false
+    },
   ],
 
   /*
